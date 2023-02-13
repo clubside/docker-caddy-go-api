@@ -1,0 +1,21 @@
+{
+	"useTabs": true,
+	"semi": false,
+	"singleQuote": true,
+	"trailingComma": "none",
+	"printWidth": 160,
+	"overrides": [
+		{
+			"files": ["*.html", "*.css"],
+			"options": {
+				"printWidth": 8000
+			}
+		},
+		{
+			"files": ["*.css"],
+			"options": {
+				"singleQuote": false
+			}
+		}
+	]
+}
