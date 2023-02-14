@@ -1,0 +1,58 @@
+:root {
+	color-scheme: light dark;
+
+	/* --font-fluid: clamp(1rem, 0.53vw + 0.87rem, 1.5rem); */
+	--font-fluid: 1em;
+	--accent-h: 21;
+	--accent-s: 90%;
+	--accent-l: 54%;
+	--accent-hs: 21 90%;
+	--accent-hsl: 21 90% 54%;
+	--background-l: 100%;
+	--foreground-l: 0%;
+	--input-l: 100%;
+	--logo-text: 0%;
+	--multiplier-l: 1;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--background-l: 11%;
+		--foreground-l: 92%;
+		--input-l: 17%;
+		--logo-text: 92%;
+		--multiplier-l: -1;
+	}
+}
+
+html {
+	font-family: Inter, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+	font-size: 100%;
+}
+
+@supports (font-variation-settings: normal) {
+	html {
+		font-family: "Inter var", BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+	}
+}
+
+body {
+	background: hsl(0 0% var(--background-l));
+	color: hsl(0 0% var(--foreground-l));
+	font-size: var(--font-fluid);
+	line-height: 1.5;
+	margin-block: 1em;
+}
+
+h1 {
+	font-size: 2em;
+	font-weight: 900;
+	line-height: 1.2;
+	letter-spacing: -0.01em;
+}
+
+main {
+	width: 55ch;
+	max-width: 98vw;
+	margin-inline: auto;
+}
