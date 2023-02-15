@@ -239,3 +239,35 @@ What else goes in the root? A few `favicon` permutations of course, and we're no
 With these ecoutraments out of the way let's look at what is going on with our SPA.
 
 ## Step 4: Switch to Caddy to handle static files
+Here we use Caddy locally along with our GO API server. Nothing changes functionality-wise but we get a rock-solid web server for our project thanks to a single download and file. Head over to the [Caddy Download Page](https://caddyserver.com/download) and grab the right version for your operating system the create a `Caddyfile` which serves as the configuration:
+```
+{
+	http_port 2010
+	servers :2015 {
+		listener_wrappers {
+			http_redirect
+			tls
+		}
+	}
+}
+https://localhost:2015 {
+	encode zstd gzip
+
+	handle /api/* {
+		reverse_proxy localhost:3000
+	}
+
+	handle {
+		root * public
+		try_files {path} index.html
+		file_server
+	}
+}
+```
+All we care about is HTTPS which Caddy will handle for us automatically. If you're not already running a web server this configuration would be much simpler but let's go with custom ports to avoid conflicts. The first section is for globals. The `http_port` is necessary because we're not using the conventional `80` and `443` and we're always forcing HTTPS but Caddy needs some port defined. The `servers :2015` block tells Caddy to forward all traffic to HTTPS and ensure there is an SSL certificate. The second section defines the behavior of our server, in this case adding compression to files, redirecting all calls to `/api/` to our Go server, and finally replacing what we had added to the Go server for static files and the SPA.
+
+Now comes the tricky part which will only matter for this step: running two executables. If you're in Visual Studio Code it's easy enough to open multiple terminals but however you want to do it you need to run both `go run main.go` and 'caddy run`. If you have never used Caddy before you'll be prompted to save the certificate needed for HTTPS. On Windows you'll see something like this:
+
+![Caddy HTTPS Certificate Dialog on Windows](img/caddy-run-certificate.webp)
+
+After the certificate is good you can now browse the site at `https://localhost:2015`. We're back to the same functionality we had in Step 3, but with two servers that we're about to wrap up inside a container.
