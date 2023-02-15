@@ -117,7 +117,7 @@ func serviceOpenGraph(w http.ResponseWriter, r *http.Request) {
 ```
 We now have a server listening on port 3000 for two API routes, `/api/v1/key` and `/api/v1/og`. "Key"  returns a random string of the `length` specified in that parameter, and "OG" returns the contents of a URI specified in the `url` parameter. To test this first step enter `go run main.go` then in your browser try `http://localhost:3000/api/v1/key?length=25` to see things working. What happens when you try the "url" route? 😛
 
-## Step 2: Static Content and a Single Page App
+## Step 2: Go Server for Static Files and SPA
 The title of this piece says Caddy will be serving our full website but for the moment we're going to temporarily use our API server to also serve static files and the SPA that will complete our development sandbox. Our API doesn't change but the top of `main.go` gets expanded:
 ```
 package main
@@ -217,8 +217,25 @@ func serveFileContents(file string, files http.FileSystem) http.HandlerFunc {
 	}
 }
 ```
-Please check out Trevor Taubitz's [Serving Single-Page Apps From Go](https://hackandsla.sh/posts/2021-11-06-serve-spa-from-go/) if you're interested in how this functionality is being handled. For now we're more concerned with some simple components that will represent a simple SPA that accesses our API.
+In order to add support for serving static files and a Single Page Application we nned to focus on this block of Go code:
+```
+	var frontend fs.FS = os.DirFS("public")
+	httpFS := http.FS(frontend)
+	fileServer := http.FileServer(httpFS)
+	serveIndex := serveFileContents("index.html", httpFS)
+
+	http.Handle("/", intercept404(fileServer, serveIndex))
+```
+It's here that we hook into the file system for our static folder root, `public`, and SPA file `index.html`. Go's built-in `FileServer` will handle all non-`html` files while `intercept404` will ensure local navigation will always be sent to `index.html`.
+
+Please check out Trevor Taubitz's [Serving Single-Page Apps From Go](https://hackandsla.sh/posts/2021-11-06-serve-spa-from-go/) if you're interested in more about how this functionality is being handled. Our Go server is now ready to serve both our API and static files, so it's time to add those components to our project.
+
+## Step 3: Single Page Application and Static Files
 
 The SPA, a simple `index.html`, is one of a few basic files that will make up our static site. In addition to [The New CSS Reset](https://github.com/elad2412/the-new-css-reset) we will have our own CSS, JavaScript and an image to test our updated Go server. All of these files are placed in the folder `public` at the root of our project.
 
 What else goes in the root? A few `favicon` permutations of course, and we're not skimping here. Starting with Andrey Sitnik's [How to Favicon in 2023: Six files that fit most needs](https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-fit-most-needs) and a generic SVG logo head over to Philippe Bernard's [RealFaviconGenerator](https://realfavicongenerator.net/) to generate more than what we need.
+
+With these ecoutraments out of the way let's look at what is going on with our SPA.
+
+## Step 4: Switch to Caddy to handle static files

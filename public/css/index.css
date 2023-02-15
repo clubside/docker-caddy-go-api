@@ -44,15 +44,154 @@ body {
 	margin-block: 1em;
 }
 
+h1,
+h2,
+h3,
+h4 {
+	line-height: 1.2;
+	letter-spacing: -0.01em;
+}
+
 h1 {
 	font-size: 2em;
 	font-weight: 900;
-	line-height: 1.2;
-	letter-spacing: -0.01em;
+}
+
+h2 {
+	font-size: 1.5em;
+	font-weight: 800;
+}
+
+h3 {
+	font-size: 1.25em;
+	font-weight: 700;
+}
+
+h4 {
+	font-size: 1.1em;
+	font-weight: 600;
+}
+
+a {
+	text-decoration: underline;
+}
+
+p,
+article {
+	margin-block: 0.75em;
+}
+
+form {
+	display: grid;
+	row-gap: 0.5em;
+}
+
+label {
+	display: block;
+	font-weight: 500;
+}
+
+input[type="text"],
+input[type="number"] {
+	padding: 0.1em 0.5em;
+	border: 0.1em solid hsl(0 0% calc(var(--background-l) - (22% * var(--multiplier-l))));
+	border-radius: 0.2em;
+	background: hsl(0 0% var(--input-l));
+	color: hsl(0 0% var(--foreground-l));
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus {
+	box-shadow: 0 0 0 0.15em hsl(var(--accent-hs) calc(var(--accent-l) + 20%) / 80%);
+	border-color: hsl(var(--accent-hsl));
+}
+
+button {
+	cursor: pointer;
+}
+
+a.button,
+button.button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	align-self: start;
+	background-color: hsl(var(--accent-hsl));
+	color: white;
+	border-radius: 8px;
+	box-shadow: 0 3px 5px hsl(0 0% var(--background-l) / 18%);
+	padding: 0.25em 0.75em;
+	min-width: 10ch;
+	min-height: 2em;
+	text-align: center;
+	line-height: 1.1;
+	transition: 220ms all ease-in-out;
+}
+
+a.button:hover,
+a.button:active,
+button.button:hover,
+button.button:active {
+	background-color: hsl(var(--accent-hs) calc(var(--accent-l) - 5%));
+	text-decoration: underline;
+}
+
+a.button:focus,
+button.button:focus {
+	outline-style: solid;
+	outline-color: transparent;
+	box-shadow: 0 0 0 0.15em hsl(var(--accent-hs) calc(var(--accent-l) + 20%) / 80%);
+}
+
+ul {
+	margin-inline: 1em;
+}
+
+ul li::before {
+	content: "📦";
+	display: inline-block;
+	margin-right: 0.5em;
 }
 
 main {
 	width: 55ch;
 	max-width: 98vw;
 	margin-inline: auto;
+}
+
+#api-length {
+	max-width: 8em;
+}
+
+#spa-og article a {
+	display: grid;
+	border-radius: 0.5em;
+	border: 0.1em solid hsl(0 0% var(--foreground-l));
+	text-decoration: none;
+}
+
+#spa-og article a header {
+	display: grid;
+	place-content: center;
+}
+
+#spa-og article a header img {
+	border-radius: 0.5em 0.5em 0 0;
+}
+
+#spa-og article div {
+	padding: 0.5em;
+}
+
+#spa-og article h3,
+#spa-og article h4 {
+	margin-block-end: 0.5em;
+}
+
+#spa-og article a:hover h3 {
+	text-decoration: underline;
+}
+
+#spa-og article div p {
+	margin: 0;
 }

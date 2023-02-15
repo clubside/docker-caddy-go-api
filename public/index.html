@@ -3,7 +3,7 @@
 
 <head <meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Docker, Caddy and Go API SPA</title>
+	<title>Home - Docker, Caddy and Go API SPA</title>
 	<link rel="stylesheet" type="text/css" href="css/reset.css">
 	<link rel="stylesheet" type="text/css" href="https://rsms.me/inter/inter.css">
 	<link rel="stylesheet" type="text/css" href="css/index.css">
@@ -15,9 +15,57 @@
 
 <body>
 	<main>
+
 		<img src="img/docker-caddy-go-header.webp">
 		<h1>Docker, Caddy and Go API Single&nbsp;Page&nbsp;App</h1>
+		<p>This is a simple SPA to demonstrate a containerized, secure web development environment.</p>
+
+		<section id="spa-home">
+			<p>The project was designed to be a walkthrough of various technologies and each step of this journey is available to <a href="steps" data-action="href">download here</a>
+				or from the <a href="https://github.com/clubside/docker-caddy-go-api">GitHub repository</a></p>
+			<p>The test API features two routes. The first will <a href="key" data-action="href">generate a random key</a> of a length you specify.
+				The second will attempt to scrape a URI and <a href="og" data-action="href">generate a fancy link</a> based on any <a href="https://ogp.me/">OpenGraph</a> data on the page.</p>	
+		</section>
+
+		<section id="spa-key">
+			<h2>Key Generator</h2>
+			<p>Enter the length of the key you would like to generate or <a href="/" data-action="href">click here</a> to return to the home page.</p>
+			<form>
+				<label for="api-length">Key Length</label>
+				<input id="api-length" type="number" value="15">
+				<footer><button class="button" type="submit" role="button" data-action="route" data-route="key/get">Get Key</button></footer>
+			</form>
+			<article></article>
+		</section>
+
+		<section id="spa-og">
+			<h2>Link Generator</h2>
+			<p>Enter the length of the key you would like to generate or <a href="/" data-action="href">click here</a> to return to the home page.</p>
+			<form>
+				<label for="api-url">Link Address</label>
+				<input id="api-url" type="text" autocomplete="url" value="https://github.com/clubside/docker-caddy-go-api">
+				<footer><button class="button" type="submit" role="button" data-action="route" data-route="og/get">Get Link</button></footer>
+			</form>
+			<article></article>
+		</section>
+
+		<section id="spa-steps">
+			<h2>Steps</h2>
+			<p>Each of the steps in creating this project has been archived for anyone interested in playing with the code
+				during its various phases of development. Click any of the links to download the archive of files for the project at
+				that step of the guide or <a href="/" data-action="href">click here</a> to return to the home page.
+			</p>
+			<ul>
+				<li><a href="steps/step01.zip">Step 1</a></li>
+				<li><a href="steps/step02.zip">Step 2</a></li>
+				<li><a href="steps/step03.zip">Step 3</a></li>
+			</ul>
+		</section>
+
 	</main>
+
+	<script src="js/index.js"></script>
+
 </body>
 
 </html>
