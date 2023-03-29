@@ -1,4 +1,5 @@
 {
+	admin 0.0.0.0:2019
 	http_port 2010
 	servers :2015 {
 		listener_wrappers {
@@ -9,14 +10,15 @@
 }
 https://localhost:2015 {
 	encode zstd gzip
+	log
 
 	handle /api/* {
-		reverse_proxy localhost:3000
+		reverse_proxy go:3000
 	}
 
 	handle {
-		root * public
-		try_files {path} index.html
+		root * /srv
+		try_files {path} /index.html
 		file_server
 	}
 }

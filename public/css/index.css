@@ -44,6 +44,10 @@ body {
 	margin-block: 1em;
 }
 
+section {
+	display: none;
+}
+
 h1,
 h2,
 h3,

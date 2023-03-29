@@ -1,0 +1,4 @@
+[build]
+cmd = "go build -o ./tmp/spa ."
+bin = "tmp/spa"
+exclude_dir = ["public","docs"]

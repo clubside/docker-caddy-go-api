@@ -1,0 +1,24 @@
+version: "3.8"
+services:
+  go:
+    build: ./
+    ports:
+      - "3000"
+    volumes:
+      - ./:/app
+  caddy:
+    image: caddy:latest
+    restart: on-failure
+    ports:
+      - "2010:2010"
+      - "2015:2015"
+      - "2019:2019"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./public:/srv
+      - caddy_data:/data
+      - caddy_config:/config
+volumes:
+  caddy_data:
+    external: true
+  caddy_config:
