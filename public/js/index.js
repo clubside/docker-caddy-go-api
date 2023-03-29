@@ -207,7 +207,7 @@ async function apiGetLink() {
 			}
 		}
 	}
-	console.log(linkTitle)
+	console.log(linkTitle ? linkTitle.innerHTML : 'no title element')
 	console.log(og)
 
 	let ogItem, elementAny
@@ -218,7 +218,12 @@ async function apiGetLink() {
 		if (ogItem) {
 			const elementHeader = document.createElement('header')
 			const elementImage = document.createElement('img')
-			elementImage.src = ogItem.content
+			if (ogItem.content.substring(0, 4) !== 'http') {
+				const urlObj = new URL(linkUrl)
+				elementImage.src = `${urlObj.protocol}//${urlObj.host}/${ogItem.content}`
+			} else {
+				elementImage.src = ogItem.content
+			}
 			ogItem = og.find(o => o.name === 'og:image:alt')
 			if (ogItem) {
 				elementImage.alt = ogItem.content
@@ -251,12 +256,16 @@ async function apiGetLink() {
 		}
 		elementLink.appendChild(elementDiv)
 	} else {
-		elementLink.href = linkUrl
+		const elementDiv = document.createElement('div')
+		elementAny = document.createElement('h3')
+		elementAny.style.marginBlockEnd = '0'
 		if (linkTitle) {
-			elementLink.innerHTML = linkTitle
+			elementAny.innerHTML = linkTitle.innerHTML
 		} else {
-			elementLink.innerHTML = linkUrl
+			elementAny.innerHTML = linkUrl
 		}
+		elementDiv.appendChild(elementAny)
+		elementLink.appendChild(elementDiv)
 	}
 	elementLink.onclick = (e) => routeHandleLink(e)
 	linkElement.appendChild(elementLink)
